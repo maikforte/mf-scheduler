@@ -1,0 +1,58 @@
+/** TOOLBAR STYLE **/
+.bordered-button {
+    border-radius: 10px;
+    border-style: solid;
+    border-width: thin;
+    color: #DDDDDD;
+    background-color: rgba(0,0,0,0);
+    padding: 10px;
+    cursor: pointer;
+}
+
+.bordered-button:hover {
+    background-color: #FFFFFF;
+    color: #4CAF50;
+}
+
+.nav {
+    background-color: rgba(0,0,0,0);
+    padding-right: 20px;
+}
+
+/** HOME STYLE **/
+.home-wrapper {
+    height: 500px;
+}
+
+.home-container {
+    width: 1000px;
+}
+
+.home-jumbo-button {
+    cursor: pointer;
+    padding: 20px;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: thin;
+    border-color: #AAAAAA;
+    background: linear-gradient(#FFFFFF, #DDDDDD);
+}
+
+.home-jumbo-button:active {
+    background: #555555;
+}
+
+.home-details-container {
+    height: 250px;
+}
+
+.home-icon {
+    font-size: 100px !important;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+.home-divider {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
