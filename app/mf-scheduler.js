@@ -1,4 +1,6 @@
 angular.module("SchedulerApp", [
     "ngMaterial",
-    "ui.router"
+    "ui.router",
+    "HTTPRequester",
+    "WeeklySchedulerApp"
 ]);

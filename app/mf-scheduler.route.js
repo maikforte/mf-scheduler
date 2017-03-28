@@ -9,6 +9,14 @@ angular.module("SchedulerApp")
         "templateUrl" : "./views/home.html"
     };
     
+    var stateWeeklyScheduler = {
+        "name" : "weekly-scheduler",
+        "url" : "/weekly-scheduler",
+        "templateUrl" : "./views/weekly-scheduler.html",
+        "controller" : "WeeklySchedulerController"
+    };
+    
     $urlRouterProvider.otherwise("/home");
     $stateProvider.state(stateHome);
+    $stateProvider.state(stateWeeklyScheduler);
 });
