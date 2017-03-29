@@ -8,24 +8,6 @@
         <md-content flex
                     md-colors="{background: 'grey-50'}">
             <div layout="column">
-                <div class="sidenav-subheader"
-                     layout="row"
-                     layout-align="center center"
-                     ng-click="turnOn('settings')">
-                    <md-icon class="sidenav-subheader-icon">settings</md-icon>
-                    SETTINGS
-                    <span flex></span>
-                    <md-icon class="sidenav-dropdown-icon"
-                             ng-class="{'sidenav-dropdown-icon-active' : !isSettingsOn }">keyboard_arrow_down</md-icon>
-                </div>
-                
-                <md-divider></md-divider>
-                
-                <div ng-class="{'sidenav-sub-item-hidden' : !isSettingsOn}">
-                    <div class="sidenav-sub-item">
-                        asd
-                    </div>
-                </div>
                 
                 <div class="sidenav-subheader"
                      layout="row"
@@ -72,6 +54,84 @@
                         
                         <span>New Task</span>
                         <i class="material-icons">add</i>
+                    </div>
+                </div>
+                
+                <div class="sidenav-subheader"
+                     layout="row"
+                     layout-align="center center"
+                     ng-click="turnOn('settings')">
+                    <md-icon class="sidenav-subheader-icon">settings</md-icon>
+                    SETTINGS
+                    <span flex></span>
+                    <md-icon class="sidenav-dropdown-icon"
+                             ng-class="{'sidenav-dropdown-icon-active' : !isSettingsOn }">keyboard_arrow_down</md-icon>
+                </div>
+                
+                <md-divider></md-divider>
+                
+                <div ng-class="{'sidenav-sub-item-hidden' : !isSettingsOn}">
+                    <div class="sidenav-sub-item
+                                sidenav-sub-item-content"
+                         layout="row"
+                            layout-align="none center">
+                            Start Time
+                            <span flex></span>
+                            
+                            <md-input-container class="md-block
+                                                no-padding-input
+                                                no-margin-input
+                                                solid-select-item">
+                                <md-select ng-model="selectedStartHour"
+                                           class="md-no-underline">
+                                    <md-option ng-repeat="hour in hoursList"
+                                               ng-value="hour.value">
+                                        {{hour.label}}
+                                    </md-option>
+                                 </md-select>
+                            </md-input-container>
+                    </div>
+                    
+                    <div class="sidenav-sub-item
+                                sidenav-sub-item-content"
+                         layout="row"
+                            layout-align="none center">
+                            End Time
+                            <span flex></span>
+                            
+                            <md-input-container class="md-block
+                                                no-padding-input
+                                                no-margin-input
+                                                solid-select-item">
+                                <md-select ng-model="selectedEndHour"
+                                           class="md-no-underline">
+                                    <md-option ng-repeat="hour in hoursList"
+                                               ng-value="hour.value">
+                                        {{hour.label}}
+                                    </md-option>
+                                 </md-select>
+                            </md-input-container>
+                    </div>
+                    
+                    <div class="sidenav-sub-item
+                                sidenav-sub-item-content"
+                         layout="row"
+                            layout-align="none center">
+                            Interval
+                            <span flex></span>
+                            
+                            <md-input-container class="md-block
+                                                no-padding-input
+                                                no-margin-input
+                                                solid-select-item">
+                                <md-select ng-model="selectedInterval"
+                                           class="md-no-underline">
+                                    <md-option ng-repeat="interval in intervalsList"
+                                               ng-value="interval.value">
+                                        {{interval.label}}
+                                    </md-option>
+                                 </md-select>
+                            </md-input-container>
                     </div>
                 </div>
                 

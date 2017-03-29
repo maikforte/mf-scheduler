@@ -1,4 +1,4 @@
-angular.module("SchedulerApp")
+angular.module("MFSchedulerApp")
 
 .config( function($mdThemingProvider) {
     $mdThemingProvider.theme("default")

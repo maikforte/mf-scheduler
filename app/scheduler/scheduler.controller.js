@@ -1,11 +1,41 @@
-angular.module("WeeklySchedulerApp")
+angular.module("SchedulerApp")
 
-.controller("WeeklySchedulerController", function($scope, $mdDialog, WeeklySchedulerService) {
+.controller("SchedulerController", function($scope, $mdDialog, SchedulerService) {
+    var fetchHours = function() {
+        SchedulerService.listHours().then(
+            function(successCallback) {
+                $scope.hoursList = successCallback.data;
+                $scope.selectedStartHour = $scope.hoursList[0].value;
+                $scope.selectedEndHour = $scope.hoursList[$scope.hoursList.length-1].value;
+            }, function(errorCallback) {
+                console.log(errorCallback);
+            }
+        );  
+    };
+    
+    var fetchIntervals = function() {
+        SchedulerService.listIntervals().then(
+            function(successCallback) {
+                $scope.intervalsList = successCallback.data;
+                $scope.selectedInterval = $scope.intervalsList[0].value;
+            }, function(errorCallback) {
+                console.log(errorCallback);
+            }
+        );
+    };
+    
     $scope.init = function() {
+        $scope.hoursList = [];
+        $scope.intervalsList = [];
+        $scope.selectedStartHour = 0;
+        $scope.selectedEndHour = 0;
+        $scope.selectedInterval = 0;
+        fetchHours();
+        fetchIntervals();
         $scope.isSettingsOn = false;
         $scope.isTaskOn = false;
         $scope.isExportOn = false;
-        $scope.taskList = WeeklySchedulerService.taskList;
+        $scope.taskList = SchedulerService.taskList;
     };
     
     $scope.turnOn = function(header) {
@@ -36,9 +66,9 @@ angular.module("WeeklySchedulerApp")
     $scope.init();
 })
 
-.controller("NewTaskController", function($scope, $mdDialog, WeeklySchedulerService) {
+.controller("NewTaskController", function($scope, $mdDialog, SchedulerService) {
     var fetchTaskType = function() {
-        WeeklySchedulerService.listTaskType().then(
+        SchedulerService.listTaskType().then(
             function(successCallback) {
                 $scope.taskTypeList = successCallback.data;
             }, function(errorCallback) {
@@ -58,7 +88,7 @@ angular.module("WeeklySchedulerApp")
     };
     
     $scope.addNewTask = function(newTask) {
-        WeeklySchedulerService.taskList.push(newTask);
+        SchedulerService.taskList.push(newTask);
         $scope.closeDialog();
     };
     

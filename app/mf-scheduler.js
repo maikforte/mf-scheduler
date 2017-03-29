@@ -1,6 +1,6 @@
-angular.module("SchedulerApp", [
+angular.module("MFSchedulerApp", [
     "ngMaterial",
     "ui.router",
     "HTTPRequester",
-    "WeeklySchedulerApp"
+    "SchedulerApp"
 ]);

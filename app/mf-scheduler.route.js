@@ -1,4 +1,4 @@
-angular.module("SchedulerApp")
+angular.module("MFSchedulerApp")
 
 .config(function($stateProvider, $locationProvider, $urlRouterProvider) {
     $locationProvider.html5Mode(true);
@@ -9,14 +9,14 @@ angular.module("SchedulerApp")
         "templateUrl" : "./views/home.html"
     };
     
-    var stateWeeklyScheduler = {
-        "name" : "weekly-scheduler",
-        "url" : "/weekly-scheduler",
-        "templateUrl" : "./views/weekly-scheduler.html",
-        "controller" : "WeeklySchedulerController"
+    var stateScheduler = {
+        "name" : "scheduler",
+        "url" : "/scheduler",
+        "templateUrl" : "./views/scheduler.html",
+        "controller" : "SchedulerController"
     };
     
     $urlRouterProvider.otherwise("/home");
     $stateProvider.state(stateHome);
-    $stateProvider.state(stateWeeklyScheduler);
+    $stateProvider.state(stateScheduler);
 });
