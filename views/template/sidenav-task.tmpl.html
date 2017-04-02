@@ -8,7 +8,8 @@
 <md-divider></md-divider>
 
 <div ng-class="{'sidenav-sub-item-hidden' : !isTaskOn }">
-    <div class="sidenav-sub-item" ng-repeat="task in taskList">
+    <div class="sidenav-sub-item" ng-repeat="task in taskList"
+         draggable="true">
         <div class="sidenav-sub-item-content" layout="row" layout-align="center center">
             <div flex="10" layout="row" layout-align="center">
                 <md-icon>
