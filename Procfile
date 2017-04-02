@@ -1,1 +1,1 @@
-web: npm install; node mf-scheduler.js
+web: node mf-scheduler.js
