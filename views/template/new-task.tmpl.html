@@ -1,30 +1,23 @@
-<md-dialog layout="column"
-           layout-padding
-           style="width: 400px;">
-    <div layout="row"
-         layout-align="center center">
+<md-dialog layout="column" layout-padding style="width: 400px;">
+    <div layout="row" layout-align="center center">
         <span class="md-title">New Task</span>
         <span flex></span>
-        <md-button class="md-icon-button"
-                   ng-click="closeDialog()">
+        <md-button class="md-icon-button" ng-click="closeDialog()">
             <md-icon>
                 close
             </md-icon>
         </md-button>
     </div>
-    
+
     <md-divider></md-divider>
-    
+
     <div>
-        <form ng-submit="addNewTask(newTask)"
-              layout="column">
+        <form ng-submit="addNewTask(newTask)" layout="column">
             <div layout="row">
-                <md-input-container class="md-block"
-                                    flex="50">
+                <md-input-container class="md-block" flex="50">
                     <label>Type</label>
                     <md-select ng-model="newTask.type">
-                        <md-option ng-repeat="taskType in taskTypeList"
-                                   ng-value="taskType">
+                        <md-option ng-repeat="taskType in taskTypeList" ng-value="taskType">
                             <md-icon>
                                 {{taskType.icon}}
                             </md-icon>
@@ -33,26 +26,19 @@
                     </md-select>
                 </md-input-container>
 
-                <md-input-container class="md-block"
-                                    flex="50">
+                <md-input-container class="md-block" flex="50">
                     <label>Name</label>
-                    <input maxlength="15"
-                           md-maxlength="15"
-                           required
-                           ng-model="newTask.name">
+                    <input maxlength="15" md-maxlength="15" required ng-model="newTask.name">
                 </md-input-container>
             </div>
 
             <md-input-container class="md-block">
                 <label>Description</label>
-                <input maxlength="25"
-                       md-maxlength="25"
-                       ng-model="newTask.description">
+                <input maxlength="25" md-maxlength="25" ng-model="newTask.description">
             </md-input-container>
-            
+
             <div>
-                <md-button type="submit"
-                           style="float: right;">
+                <md-button type="submit" style="float: right;">
                     Add
                 </md-button>
             </div>

@@ -1,0 +1,41 @@
+<div class="sidenav-subheader" layout="row" layout-align="center center" ng-click="turnOn('export')">
+    <md-icon class="sidenav-subheader-icon">file_download</md-icon>
+    EXPORT
+    <span flex></span>
+    <md-icon class="sidenav-dropdown-icon" ng-class="{'sidenav-dropdown-icon-active' : !isExportOn }">keyboard_arrow_down</md-icon>
+</div>
+
+<md-divider></md-divider>
+
+<div ng-class="{'sidenav-sub-item-hidden' : !isExportOn}">
+    <div class="sidenav-sub-item-content sidenav-sub-item" layout="row" layout-align="center center">
+        <div flex="10" layout="row" layout-align="center">
+            <md-icon>
+                picture_as_pdf
+            </md-icon>
+        </div>
+        <div layout="column" flex="95" class="sidenav-sub-item-content">
+            <div>.PDF</div>
+        </div>
+    </div>
+    <div class="sidenav-sub-item-content sidenav-sub-item" layout="row" layout-align="center center">
+        <div flex="10" layout="row" layout-align="center">
+            <md-icon>
+                grid_on
+            </md-icon>
+        </div>
+        <div layout="column" flex="95" class="sidenav-sub-item-content">
+            <div>.XLSX</div>
+        </div>
+    </div>
+    <div class="sidenav-sub-item-content sidenav-sub-item" layout="row" layout-align="center center">
+        <div flex="10" layout="row" layout-align="center">
+            <md-icon>
+                image
+            </md-icon>
+        </div>
+        <div layout="column" flex="95" class="sidenav-sub-item-content">
+            <div>.PNG</div>
+        </div>
+    </div>
+</div>

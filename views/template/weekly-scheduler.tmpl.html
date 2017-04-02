@@ -1,0 +1,15 @@
+<table class="mf-table" md-whiteframe="7">
+    <thead>
+        <tr>
+            <th></th>
+            <th ng-repeat="day in dayList">{{day.label}}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="hoursInterval in hoursIntervalList">
+            <td align="right">{{hoursInterval.label}}</td>
+            <td ng-repeat="day in dayList"></td>
+        </tr>
+    </tbody>
+</table>
