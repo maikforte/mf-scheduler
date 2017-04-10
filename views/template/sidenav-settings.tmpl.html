@@ -1,13 +1,13 @@
-<div class="sidenav-subheader" layout="row" layout-align="center center" ng-click="turnOn('settings')">
+<div class="sidenav-subheader" layout="row" layout-align="center center" ng-init="isSettingsCollapsed = false" ng-click="isSettingsCollapsed = !isSettingsCollapsed">
     <md-icon class="sidenav-subheader-icon">settings</md-icon>
     SETTINGS
     <span flex></span>
-    <md-icon class="sidenav-dropdown-icon" ng-class="{'sidenav-dropdown-icon-active' : !isSettingsOn }">keyboard_arrow_down</md-icon>
+    <md-icon class="sidenav-dropdown-icon" ng-class="{'sidenav-dropdown-icon-active' : !isSettingsCollapsed }">keyboard_arrow_down</md-icon>
 </div>
 
 <md-divider></md-divider>
 
-<div ng-class="{'sidenav-sub-item-hidden' : !isSettingsOn}">
+<div ng-class="{'sidenav-sub-item-hidden' : !isSettingsCollapsed}">
     <div class="sidenav-sub-item
                 sidenav-sub-item-content" layout="row" layout-align="none center">
         Start Time

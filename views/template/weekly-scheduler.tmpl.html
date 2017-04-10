@@ -8,8 +8,12 @@
 
     <tbody>
         <tr ng-repeat="hoursInterval in hoursIntervalList">
-            <td align="right">{{hoursInterval.label}}</td>
-            <td ng-repeat="day in dayList"></td>
+            <td align="right" class="mf-table-data-header">{{hoursInterval.label}}</td>
+            <td ng-repeat="day in hoursInterval.dayList" ondragover="windowAllowDrag(event)" ng-mouseup="onDrop(hoursInterval, day)">
+                <div layout-fill md-colors="{background: 'primary'}" ng-show="day.hasSchedule">
+                    {{day.task.name}}
+                </div>
+            </td>
         </tr>
     </tbody>
 </table>

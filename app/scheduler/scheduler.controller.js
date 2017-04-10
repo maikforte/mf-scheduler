@@ -1,6 +1,6 @@
 angular.module("SchedulerApp")
 
-    .controller("SchedulerController", function ($scope, $mdDialog, SchedulerService) {
+    .controller("SchedulerController", function ($scope, $mdDialog, $window, SchedulerService) {
         var fetchHours = function () {
             SchedulerService.listHours().then(
                 function (successCallback) {
@@ -27,6 +27,13 @@ angular.module("SchedulerApp")
             );
         };
 
+        var demoTask = function () {
+            var task = {
+                name: "ASD"
+            };
+            $scope.taskList.push(task);
+        };
+
         var fetchDays = function () {
             SchedulerService.listDays().then(
                 function (successCallback) {
@@ -42,6 +49,12 @@ angular.module("SchedulerApp")
             SchedulerService.listHoursInterval(startHour, endHour, interval).then(
                 function (successCallback) {
                     $scope.hoursIntervalList = successCallback.data;
+                    for (i = 0; i < $scope.hoursIntervalList.length; i++) {
+                        $scope.hoursIntervalList[i].dayList = angular.copy($scope.dayList);
+                        for (j = 0; j < $scope.hoursIntervalList[i].dayList.length; j++) {
+                            $scope.hoursIntervalList[i].dayList[j].hasSchedule = false;
+                        }
+                    };
                 },
                 function (errorCallback) {
                     console.log(errorCallback);
@@ -58,26 +71,10 @@ angular.module("SchedulerApp")
             $scope.selectedEndHour = 0;
             $scope.selectedInterval = 0;
             fetchHours();
-            fetchIntervals();
             fetchDays();
-            $scope.isSettingsOn = false;
-            $scope.isTaskOn = false;
-            $scope.isExportOn = false;
+            fetchIntervals();
             $scope.taskList = SchedulerService.taskList;
-        };
-
-        $scope.turnOn = function (header) {
-            switch (header) {
-                case "settings":
-                    $scope.isSettingsOn = !$scope.isSettingsOn;
-                    break;
-                case "task":
-                    $scope.isTaskOn = !$scope.isTaskOn;
-                    break;
-                case "export":
-                    $scope.isExportOn = !$scope.isExportOn;
-                    break;
-            };
+            demoTask();
         };
 
         $scope.showNewTask = function (event) {
@@ -89,7 +86,43 @@ angular.module("SchedulerApp")
                 clickOutsideToClose: true,
                 fullscreen: true
             });
-        }
+        };
+
+        $window.windowAllowDrag = function (event) {
+            event.preventDefault();
+        };
+
+        $scope.onDrag = function (task) {
+            $scope.selectedTask = task;
+        };
+
+        $window.windowDrag = function (event) {
+            event.dataTransfer.setData("task", JSON.stringify($scope.selectedTask));
+        };
+
+        $scope.onDrop = function (hoursInterval, day) {
+            for (i = 0; i < $scope.hoursIntervalList.length; i++) {
+                if (parseFloat($scope.hoursIntervalList[i].value) == parseFloat(hoursInterval.value)) {
+                    for (j = 0; j < $scope.hoursIntervalList[i].dayList.length; j++) {
+                        if (parseInt($scope.hoursIntervalList[i].dayList[j].value) == parseInt(day.value)) {
+                            if ($scope.selectedTask != null) {
+                                $scope.hoursIntervalList[i].dayList[j].task = $scope.selectedTask;
+                                $scope.hoursIntervalList[i].dayList[j].hasSchedule = true;
+                                break;
+                            } else {
+                                console.log("NULL");
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            $scope.selectedTask = null;
+        };
+
+        $window.windowDrop = function (event) {
+            event.preventDefault();
+        };
 
         $scope.init();
     })

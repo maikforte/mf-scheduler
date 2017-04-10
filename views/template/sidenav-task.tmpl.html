@@ -1,34 +1,33 @@
-<div class="sidenav-subheader" layout="row" layout-align="center center" ng-click="turnOn('task')">
+<div class="sidenav-subheader" layout="row" layout-align="center center" ng-init="isTaskCollapsed = true" ng-click="isTaskCollapsed = !isTaskCollapsed">
     <md-icon class="sidenav-subheader-icon">note</md-icon>
     TASK
     <span flex></span>
-    <md-icon class="sidenav-dropdown-icon" ng-class="{'sidenav-dropdown-icon-active' : !isTaskOn }">keyboard_arrow_down</md-icon>
+    <md-icon class="sidenav-dropdown-icon" ng-class="{'sidenav-dropdown-icon-active' : !isTaskCollapsed }">keyboard_arrow_down</md-icon>
 </div>
 
 <md-divider></md-divider>
 
-<div ng-class="{'sidenav-sub-item-hidden' : !isTaskOn }">
-    <div class="sidenav-sub-item" ng-repeat="task in taskList"
-         draggable="true">
-        <div class="sidenav-sub-item-content" layout="row" layout-align="center center">
-            <div flex="10" layout="row" layout-align="center">
+<div ng-class="{'sidenav-sub-item-hidden' : !isTaskCollapsed }">
+    <div class="sidenav-sub-item" ng-repeat="task in taskList" draggable="true" ondragstart="windowDrag(event)" ng-mousedown="onDrag(task)">
+        <div class="sidenav-sub-item-content " layout="row " layout-align="center center ">
+            <div flex="10 " layout="row " layout-align="center ">
                 <md-icon>
                     {{task.type.icon}}
                 </md-icon>
             </div>
-            <div layout="column" flex="95" class="sidenav-sub-item-content">
+            <div layout="column " flex="95 " class="sidenav-sub-item-content ">
                 <div>{{task.name}}</div>
-                <div class="md-body-1">{{task.description}}</div>
+                <div class="md-body-1 ">{{task.description}}</div>
             </div>
         </div>
     </div>
-    <div layout="row" class="sidenav-button" layout-align="center center" ng-click="showNewTask($event)">
+    <div layout="row " class="sidenav-button " layout-align="center center " ng-click="showNewTask($event) ">
 
-        <md-tooltip md-direction="right">
+        <md-tooltip md-direction="right ">
             Create new task
         </md-tooltip>
 
         <span>New Task</span>
-        <i class="material-icons">add</i>
+        <i class="material-icons ">add</i>
     </div>
 </div>

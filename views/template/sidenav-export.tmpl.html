@@ -1,13 +1,13 @@
-<div class="sidenav-subheader" layout="row" layout-align="center center" ng-click="turnOn('export')">
+<div class="sidenav-subheader" layout="row" layout-align="center center" ng-init="isExportCollapsed = false" ng-click="isExportCollapsed = !isExportCollapsed">
     <md-icon class="sidenav-subheader-icon">file_download</md-icon>
     EXPORT
     <span flex></span>
-    <md-icon class="sidenav-dropdown-icon" ng-class="{'sidenav-dropdown-icon-active' : !isExportOn }">keyboard_arrow_down</md-icon>
+    <md-icon class="sidenav-dropdown-icon" ng-class="{'sidenav-dropdown-icon-active' : !isExportCollapsed }">keyboard_arrow_down</md-icon>
 </div>
 
 <md-divider></md-divider>
 
-<div ng-class="{'sidenav-sub-item-hidden' : !isExportOn}">
+<div ng-class="{'sidenav-sub-item-hidden' : !isExportCollapsed}">
     <div class="sidenav-sub-item-content sidenav-sub-item" layout="row" layout-align="center center">
         <div flex="10" layout="row" layout-align="center">
             <md-icon>

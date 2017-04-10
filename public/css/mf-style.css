@@ -145,7 +145,7 @@
 }
 
 .mf-table {
-/*
+    /*
     border: solid;
     border-width: thin;
     border-color: #DDDDDD;
@@ -166,8 +166,14 @@ table.mf-table th {
 }
 
 table.mf-table td {
-    padding: 10px;
+    padding: 0px;
+    height: 40px;
     border: solid;
     border-width: thin;
     border-color: #DDDDDD;
+}
+
+.mf-table-data-header {
+    padding-right: 5px !important;
+    padding-left: 5px !important;
 }

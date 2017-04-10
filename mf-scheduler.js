@@ -2,7 +2,7 @@ var express = require("express");
 var taskTypeModule = require("./lib/task-type.js");
 var filters = require("./lib/filters.js");
 var app = express();
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 3000;
 
 app.engine(".html", require("ejs").__express);
 app.set("views", __dirname + "/views");
