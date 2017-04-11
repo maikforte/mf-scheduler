@@ -9,9 +9,12 @@
     <tbody>
         <tr ng-repeat="hoursInterval in hoursIntervalList">
             <td align="right" class="mf-table-data-header">{{hoursInterval.label}}</td>
-            <td ng-repeat="day in hoursInterval.dayList" ondragover="windowAllowDrag(event)" ng-mouseup="onDrop(hoursInterval, day)">
-                <div layout-fill md-colors="{background: 'primary'}" ng-show="day.hasSchedule">
-                    {{day.task.name}}
+            <td ng-repeat="day in hoursInterval.dayList" ondragover="windowAllowDrag(event)" ng-mouseup="onDrop(hoursInterval, day)" class="mf-table-td-data" style="position: relative;" ng-init="day.index=$index">
+                <div class="mf-table-td-content md-body-1" style="height: {{day.height}}px; width: 98%; position: absolute; top: 0;" ng-show="day.hasSchedule">
+                    <div layout="row" layout-align="none center">
+                        <i class="material-icons">{{day.task.type.icon}}</i>{{day.task.name}}
+                    </div>
+                    {{day.task.description}}
                 </div>
             </td>
         </tr>

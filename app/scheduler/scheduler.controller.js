@@ -52,6 +52,9 @@ angular.module("SchedulerApp")
                     for (i = 0; i < $scope.hoursIntervalList.length; i++) {
                         $scope.hoursIntervalList[i].dayList = angular.copy($scope.dayList);
                         for (j = 0; j < $scope.hoursIntervalList[i].dayList.length; j++) {
+                            $scope.hoursIntervalList[i].dayList[j].task = {
+                                "name": null
+                            };
                             $scope.hoursIntervalList[i].dayList[j].hasSchedule = false;
                         }
                     };
@@ -70,6 +73,7 @@ angular.module("SchedulerApp")
             $scope.selectedStartHour = 0;
             $scope.selectedEndHour = 0;
             $scope.selectedInterval = 0;
+            $scope.tdHeight = 40;
             fetchHours();
             fetchDays();
             fetchIntervals();
@@ -108,6 +112,7 @@ angular.module("SchedulerApp")
                             if ($scope.selectedTask != null) {
                                 $scope.hoursIntervalList[i].dayList[j].task = $scope.selectedTask;
                                 $scope.hoursIntervalList[i].dayList[j].hasSchedule = true;
+                                $scope.hoursIntervalList[i].dayList[j].height = $scope.tdHeight;
                                 break;
                             } else {
                                 console.log("NULL");
@@ -117,8 +122,42 @@ angular.module("SchedulerApp")
                     }
                 }
             }
+            calibrateSchedule();
             $scope.selectedTask = null;
         };
+
+        var calibrateSchedule = function () {
+            dayList: for (dayIndex = 0; dayIndex < $scope.hoursIntervalList[0].dayList.length - 1; dayIndex++) {
+                var temp = $scope.hoursIntervalList[0].dayList[dayIndex];
+                var multiplier = 0;
+                var additionalPixel = 1;
+                comparator: for (comparatorIndex = 0; comparatorIndex < $scope.hoursIntervalList.length - 1; comparatorIndex++) {
+                    //                    console.log(temp.task.name);//                    console.log($scope.hoursIntervalList[comparatorIndex].dayList[dayIndex].task.name);
+                    if (temp.task.name != null &&
+                        $scope.hoursIntervalList[comparatorIndex].dayList[dayIndex].task.name &&
+                        compareStr(temp.task.name, $scope.hoursIntervalList[comparatorIndex].dayList[dayIndex].task.name) == 0) {
+
+                        //                        console.log(dayIndex +"-" + comparatorIndex);
+                        //                        console.log(temp);
+                        multiplier += 1;
+                        //                        additionalPixel += 1;
+                        $scope.hoursIntervalList[comparatorIndex].dayList[dayIndex].hasSchedule = false;
+                        temp.hasSchedule = true;
+                    } else {
+                        temp.height = ($scope.tdHeight * multiplier) + (additionalPixel * multiplier) - 2;
+                        console.log(temp.height);
+                        additionalPixel = 0;
+                        multiplier = 0;
+                        temp = $scope.hoursIntervalList[comparatorIndex + 1].dayList[dayIndex];
+                        //                        console.log($scope.hoursIntervalList[comparatorIndex].dayList[dayIndex]);
+                    }
+                }
+            }
+        };
+
+        var compareStr = function (s1, s2) {
+            return s1 < s2 ? -1 : s1 > s2 ? 1 : 0;
+        }
 
         $window.windowDrop = function (event) {
             event.preventDefault();
