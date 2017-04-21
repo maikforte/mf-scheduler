@@ -167,7 +167,7 @@ table.mf-table th {
 
 table.mf-table td {
     padding: 0px;
-    height: 40px;
+    height: 50px;
     border: solid;
     border-width: thin;
     border-color: #DDDDDD;
@@ -184,6 +184,18 @@ table.mf-table td {
     outline-color: #03A9F4;
 }
 
+.mf-table-td-content-trail {
+    border-radius: 5px;
+    border-color: #1976D2 !important;
+    border: solid;
+    border-width: thin;
+    background-color: #2196F3;
+    opacity: 0.5;
+    z-index: 1;
+    height: 100%;
+    color: #FFFFFF;
+}
+
 .mf-table-td-content {
     border-radius: 5px;
     border-color: #1976D2 !important;
@@ -192,4 +204,15 @@ table.mf-table td {
     background-color: #2196F3;
     height: 100%;
     color: #FFFFFF;
+}
+
+.resizer-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    cursor: ns-resize;
+}
+
+.resizer-bottom:hover {
+    cursor: ns-resize;
 }

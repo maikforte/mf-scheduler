@@ -9,12 +9,30 @@
     <tbody>
         <tr ng-repeat="hoursInterval in hoursIntervalList">
             <td align="right" class="mf-table-data-header">{{hoursInterval.label}}</td>
-            <td ng-repeat="day in hoursInterval.dayList" ondragover="windowAllowDrag(event)" ng-mouseup="onDrop(hoursInterval, day)" class="mf-table-td-data" style="position: relative;" ng-init="day.index=$index">
-                <div class="mf-table-td-content md-body-1" style="height: {{day.height}}px; width: 98%; position: absolute; top: 0;" ng-show="day.hasSchedule">
-                    <div layout="row" layout-align="none center">
-                        <i class="material-icons">{{day.task.type.icon}}</i>{{day.task.name}}
+            <td ng-repeat="day in hoursInterval.dayList" ondragover="windowAllowDrag(event)" ng-mouseup="onDrop(hoursInterval, day)" class="mf-table-td-data" style="position: relative;" ng-init="day.isResizing=false" ng-mouseenter="resize(hoursInterval, day);">
+                <div class="mf-table-td-content-trail md-body-1" style="height: {{day.tempHeight}}px; width: 100%; position: absolute; top: 0; z-index: 2;" ng-show="day.hasSchedule && day.isResizing" layout="column">
+                    <div flex>
+                        <div layout="row" layout-align="none center">
+                            <i class="material-icons">{{day.task.type.icon}}</i>{{day.task.name}}
+                        </div>
+                        {{day.task.description}}
                     </div>
-                    {{day.task.description}}
+                    <!--                    <div class="resizer-bottom" ng-mousedown="day.isResizing=true; startResize(hoursInterval, day)"></div>-->
+                </div>
+
+                <div class=" mf-table-td-content md-body-1 " style="height: {{day.height}}px; width: 100%; position: absolute; top: 0; z-index: 1;" ng-show="day.hasSchedule" layout="column" ng-mouseover="canResize=true" ng-mouseleave="canResize=false" ng-init="canResize=false">
+                    <div>
+                        <div layout="row " layout-align="none center ">
+                            <i class="material-icons ">{{day.task.type.icon}}</i>{{day.task.name}}
+                        </div>
+                        {{day.task.description}}
+                    </div>
+                    <span flex></span>
+                    <div class="resizer-bottom" ng-mousedown="day.isResizing=true; startResize(hoursInterval, day, $event)" layout="column" ng-show="canResize">
+                        <md-icon md-colors="{color: 'grey-50'}">
+                            menu
+                        </md-icon>
+                    </div>
                 </div>
             </td>
         </tr>

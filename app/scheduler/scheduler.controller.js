@@ -29,7 +29,13 @@ angular.module("SchedulerApp")
 
         var demoTask = function () {
             var task = {
-                name: "ASD"
+                name: "ASD",
+                description: "ASD"
+            };
+            $scope.taskList.push(task);
+            task = {
+                name: "DD",
+                description: "DD"
             };
             $scope.taskList.push(task);
         };
@@ -73,11 +79,15 @@ angular.module("SchedulerApp")
             $scope.selectedStartHour = 0;
             $scope.selectedEndHour = 0;
             $scope.selectedInterval = 0;
-            $scope.tdHeight = 40;
+            $scope.tdHeight = 50;
             fetchHours();
             fetchDays();
             fetchIntervals();
             $scope.taskList = SchedulerService.taskList;
+            $scope.resizingIntervalValue = null;
+            $scope.resizingDayValue = null;
+            $scope.resizeTaskSize = null;
+            $scope.resizingTask = null;
             demoTask();
         };
 
@@ -115,7 +125,6 @@ angular.module("SchedulerApp")
                                 $scope.hoursIntervalList[i].dayList[j].height = $scope.tdHeight;
                                 break;
                             } else {
-                                console.log("NULL");
                                 break;
                             }
                         }
@@ -129,27 +138,19 @@ angular.module("SchedulerApp")
         var calibrateSchedule = function () {
             dayList: for (dayIndex = 0; dayIndex < $scope.hoursIntervalList[0].dayList.length - 1; dayIndex++) {
                 var temp = $scope.hoursIntervalList[0].dayList[dayIndex];
-                var multiplier = 0;
+                var multiplier = 1;
                 var additionalPixel = 1;
                 comparator: for (comparatorIndex = 0; comparatorIndex < $scope.hoursIntervalList.length - 1; comparatorIndex++) {
-                    //                    console.log(temp.task.name);//                    console.log($scope.hoursIntervalList[comparatorIndex].dayList[dayIndex].task.name);
                     if (temp.task.name != null &&
-                        $scope.hoursIntervalList[comparatorIndex].dayList[dayIndex].task.name &&
-                        compareStr(temp.task.name, $scope.hoursIntervalList[comparatorIndex].dayList[dayIndex].task.name) == 0) {
-
-                        //                        console.log(dayIndex +"-" + comparatorIndex);
-                        //                        console.log(temp);
+                        $scope.hoursIntervalList[comparatorIndex + 1].dayList[dayIndex].task.name &&
+                        compareStr(temp.task.name, $scope.hoursIntervalList[comparatorIndex + 1].dayList[dayIndex].task.name) == 0) {
                         multiplier += 1;
-                        //                        additionalPixel += 1;
-                        $scope.hoursIntervalList[comparatorIndex].dayList[dayIndex].hasSchedule = false;
+                        $scope.hoursIntervalList[comparatorIndex + 1].dayList[dayIndex].hasSchedule = false;
                         temp.hasSchedule = true;
                     } else {
                         temp.height = ($scope.tdHeight * multiplier) + (additionalPixel * multiplier) - 2;
-                        console.log(temp.height);
-                        additionalPixel = 0;
-                        multiplier = 0;
+                        multiplier = 1;
                         temp = $scope.hoursIntervalList[comparatorIndex + 1].dayList[dayIndex];
-                        //                        console.log($scope.hoursIntervalList[comparatorIndex].dayList[dayIndex]);
                     }
                 }
             }
@@ -161,6 +162,79 @@ angular.module("SchedulerApp")
 
         $window.windowDrop = function (event) {
             event.preventDefault();
+        };
+
+        /* Resize functions */
+        $scope.startResize = function (hoursInterval, day, event) {
+            $scope.resizingIntervalValue = hoursInterval.value;
+            $scope.resizingDayValue = day.value;
+            $scope.resizingTask = day.task;
+            event.preventDefault();
+
+            for (intervalIndex = 0; intervalIndex < $scope.hoursIntervalList.length; intervalIndex++) {
+                for (dayIndex = 0; dayIndex < $scope.hoursIntervalList[intervalIndex].dayList.length; dayIndex++) {
+                    if ($scope.hoursIntervalList[intervalIndex].value == $scope.resizingIntervalValue && $scope.hoursIntervalList[intervalIndex].dayList[dayIndex].value == $scope.resizingDayValue) {
+                        $scope.hoursIntervalList[intervalIndex].dayList[dayIndex].tempHeight = $scope.tdHeight;
+                        break;
+                    }
+                }
+            }
+        };
+
+        $scope.endResize = function () {
+            if ($scope.resizingIntervalValue != null &&
+                $scope.resizingDayValue != null) {
+                $scope.confirmResize($scope.resizeTaskSize);
+                for (intervalIndex = 0; intervalIndex < $scope.hoursIntervalList.length; intervalIndex++) {
+                    for (dayIndex = 0; dayIndex < $scope.hoursIntervalList[intervalIndex].dayList.length; dayIndex++) {
+                        if ($scope.hoursIntervalList[intervalIndex].value == $scope.resizingIntervalValue && $scope.hoursIntervalList[intervalIndex].dayList[dayIndex].value == $scope.resizingDayValue) {
+                            $scope.hoursIntervalList[intervalIndex].dayList[dayIndex].isResizing = false;
+                            $scope.resizingIntervalValue = null;
+                            $scope.resizingDayValue = null;
+                            break;
+                        }
+                    }
+                }
+            }
+        };
+
+        /**
+         * Function is called when the mouse hovers on a schedule <td> element.
+         */
+        $scope.resize = function (hoursInterval, day) {
+            console.log(hoursInterval.value);
+            console.log($scope.resizingIntervalValue);
+            if (!$scope.resizingIntervalValue == null && !$scope.resizingDayValue == null || hoursInterval.value > $scope.resizingIntervalValue) {
+                var incrementSize = 1 + (hoursInterval.value - $scope.resizingIntervalValue);
+                for (intervalIndex = 0; intervalIndex < $scope.hoursIntervalList.length; intervalIndex++) {
+                    for (dayIndex = 0; dayIndex < $scope.hoursIntervalList[intervalIndex].dayList.length; dayIndex++) {
+                        if ($scope.hoursIntervalList[intervalIndex].value == $scope.resizingIntervalValue && $scope.hoursIntervalList[intervalIndex].dayList[dayIndex].value == $scope.resizingDayValue) {
+                            $scope.hoursIntervalList[intervalIndex].dayList[dayIndex].tempHeight = ($scope.tdHeight * incrementSize) + (hoursInterval.value - $scope.resizingIntervalValue) - 2;
+                            $scope.resizeTaskSize = hoursInterval.value;
+                            break;
+                        }
+                    }
+                }
+                //                var incrementSize = 1 + (hoursInterval.value - $scope.resizingIntervalValue);
+
+            }
+        };
+
+        $scope.confirmResize = function (hoursIntervalValue) {
+            if (!$scope.resizingIntervalValue == null && !$scope.resizingDayValue && null || hoursIntervalValue > $scope.resizingIntervalValue) {
+                for (intervalIndex = $scope.resizingIntervalValue; intervalIndex < $scope.hoursIntervalList.length; intervalIndex++) {
+                    if ($scope.hoursIntervalList[intervalIndex].value <= hoursIntervalValue) {
+                        for (dayIndex = 0; dayIndex < $scope.hoursIntervalList[intervalIndex].dayList.length; dayIndex++) {
+                            if ($scope.hoursIntervalList[intervalIndex].dayList[dayIndex].value == $scope.resizingDayValue) {
+                                $scope.hoursIntervalList[intervalIndex].dayList[dayIndex].task = $scope.resizingTask;
+                                $scope.hoursIntervalList[intervalIndex].dayList[dayIndex].hasSchedule = true;
+                            }
+                        }
+                    }
+                }
+                $scope.resizeTaskSize = null;
+                calibrateSchedule();
+            }
         };
 
         $scope.init();

@@ -1,5 +1,5 @@
-<md-dialog layout="column" layout-padding style="width: 400px;">
-    <div layout="row" layout-align="center center">
+<md-dialog layout="column" style="width: 400px;">
+    <div layout="row" layout-align="center center" layout-padding>
         <span class="md-title">New Task</span>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="closeDialog()">
@@ -11,7 +11,7 @@
 
     <md-divider></md-divider>
 
-    <div>
+    <div layout-padding>
         <form ng-submit="addNewTask(newTask)" layout="column">
             <div layout="row">
                 <md-input-container class="md-block" flex="50">
